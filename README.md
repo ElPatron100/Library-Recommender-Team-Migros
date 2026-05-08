@@ -9,11 +9,21 @@ This project aims to improve the student experience on the university library pl
 ## 🗄 Exploratory Data Analysis (EDA)
 Our analysis focused on two primary datasets:
 # **Interactions:**
-This dataset shows the interaction between the users and the books for the last X years. In total the dataset shows 87,047 rental records across 7,838 unique users and 15.109 books.
-In average, user rented a total of X book and each book has been rented a total of x times. 
-It is important to highlight that a small number of books (the "bestsellers") account for a large portion of the interactions, while many books have only been rented once or twice. Indeed, X% of the book represent more than X% of the rentals. The same element can be analysed for the user since x% of the user did x% of the rental.
-![Description of the heatmap](heatmap.png)
-This heatmap shows the interactions between the first user and the first books.
+This dataset shows the interaction between the users and the books for the last 2 years. In total the dataset shows 87,047 rental records across 7,838 unique users and 15.109 books.
+
+In average, user rented a total of 11.11 book and each book has been rented a total of 5.76 times. 
+
+![Distribution of the rentals](rentals_per_user_item.png)
+This graph shows the distribution of the rentals per users and per items.
+The distribution of rentals per user is heavily skewed to the left:
+*  **The Majority**: Most users are "casual" readers who have interacted with only 2 to 5 books.
+*  **The Tail**: Only less than 13% of users have rented more than 20 items, creating a long tail that stretches toward the right.
+
+The "Rentals per Item" graph shows how the library collection is utilized:
+*  **Niche vs. Popular**: The peak indicates that most books have been rented roughly 4 to 6 times.
+*  **Concentration**: There is a sharp drop-off after 10 rentals, indicating that only a small fraction of the books (7%) are "bestsellers" with high circulation numbers.
+
+
 
 # **Metadata:**
 The second important dataset at the origin of our recommender are the metadat about the books. This dataset gives information on 15,109 books, including Titles, Authors, and Subjects. add something about the distribution between authors, subjects, ...
@@ -109,6 +119,10 @@ We can see that the model recommend XX to the user X even if it seems not releva
 
 
 
+---
+## Limitation
+
+More than x% of the user rented less than x books --> difficult to understand a trend based on that
 ---
 
 ## 💻 User Interface (Streamlit)
