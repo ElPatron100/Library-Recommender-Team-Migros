@@ -41,6 +41,12 @@ Here is an example of the data for 3 different books chosen randomly in the data
 | 9235 | Commentaire du Code pénal suisse / (Art. 1-110) | Logoz, Paul | Delachaux et Niestlé | droit pénal--Suisse--[manuel] |
 | 3818 | Petar & Liza | Sekulić-Struja, Miroslav | Actes Sud | Bandes dessinées |
 
+The visualization below highlights the dominant keywords within the library's **Subjects** metadata, revealing a clear geographic and thematic focus.
+
+The term **"Suisse"** is the most frequent descriptor, appearing in over 3,000 records. Following this geographic marker, the dataset is categorized by literary forms, such as **"Bandes dessinées"** (comics) and **"Romans"** (novels). Additionally, academic and topical keywords like **"enseignement"** (education), **"droit"** (law), and **"histoire"** (history) appear with significant frequency.
+
+![Top Keywords](top_keywords.png)
+
 **_Table 1: Example of the item dataset_**
 
 ## 🛠 Methodology & Algorithms
