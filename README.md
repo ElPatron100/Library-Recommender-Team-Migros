@@ -4,14 +4,20 @@
 [![YouTube Video](https://img.shields.io/badge/YouTube-Video-red?logo=youtube)](YOUR_YOUTUBE_LINK_HERE)
 
 ## 📖 Overview
-This project aims to improve the student experience on the university library platform. By building a recommendation system, we predict books that students are likely to enjoy based on their rental history. This "You might also like..." functionality is designed to increase engagement and help users discover relevant academic and leisure materials.
+This project aims to enhance the student experience on the university library platform by integrating a personalized recommendation system. By analyzing rental histories, the "You might also like..." feature predicts and suggests academic and leisure materials tailored to individual interests, thereby fostering deeper user engagement and discovery.
+
+To further elevate the overall user experience, the platform introduces three innovative features:
+* **Best-seller recommender**: under the personalized recommendation, the reader have access to the list of the 10 books the most read that they have not rented yet.
+* **Book Friend Recommender**: This social tool matches readers based on shared reading habits to encourage intellectual exchange and community building. Its ultimate goal is to facilitate book discussions and inspire the formation of local book clubs.
+* **Cumulus Fidelity Integration**: Developed in partnership with the Migros group, the app allows readers to earn Cumulus points for every library rental. This incentive program is designed to reward frequent readers and increase long-term fidelity to the library system.
+
 
 ## 🗄 Exploratory Data Analysis (EDA)
 Our analysis focused on two primary datasets:
 # **Interactions:**
 This dataset shows the interaction between the users and the books for the last 2 years. In total the dataset shows 87,047 rental records across 7,838 unique users and 15.109 books.
 
-In average, user rented a total of 11.11 book and each book has been rented a total of 5.76 times. 
+In average, user rented a total of 11.11 book and each book has been rented an average of 5.76 times. 
 
 ![Distribution of the rentals](rentals_per_user_item.png)
 This graph shows the distribution of the rentals per users and per items.
@@ -26,8 +32,15 @@ The "Rentals per Item" graph shows how the library collection is utilized:
 
 
 # **Metadata:**
-The second important dataset at the origin of our recommender are the metadat about the books. This dataset gives information on 15,109 books, including Titles, Authors, and Subjects. add something about the distribution between authors, subjects, ...
+The second important dataset at the origin of our recommender are the metadat about the books. This dataset gives information on 15,109 books, including Titles, Authors, Publisher and Subjects.
+Here is an example of the data for 3 different books chosen randomly in the dataset.
 
+#### Example of the item dataset
+| ItemID | Title | Author | Publisher | Subjects |
+| :--- | :--- | :--- |:--- |:--- |
+| 4357 | Charlotte Olivier : la lutte contre la tuberculose dans le canton de Vaud  | Heller, Geneviève | Ed d'en bas | Tuberculosis, Pulmonary--prevention & control; Tuberculosis, Pulmonary--history; lutte contre la tuberculose--Olivier, Charlotte--Vaud (Suisse)--19e s. (fin) / 20e s. (début); Switzerland |
+| 9235 | Commentaire du Code pénal suisse / (Art. 1-110) | Logoz, Paul | Delachaux et Niestlé | droit pénal--Suisse--[manuel] |
+| 3818 | Petar & Liza | Sekulić-Struja, Miroslav | Actes Sud | Bandes dessinées |
 
 ## 🛠 Methodology & Algorithms
 Our approach evolved from basic collaborative filtering to a complex hybrid system that integrates user behavior with book metadata.
@@ -37,6 +50,8 @@ We began by implementing two foundational collaborative filtering techniques usi
 
 * **User-User CF:** This method identifies "neighbor" users who have similar rental histories. If User A and User B have both rented several of the same books, the system recommends other books rented by User B to User A.
 * **Item-Item CF:** This method focuses on the relationships between books rather than users. It calculates similarity based on how often two books are rented by the same people. If a student rents a book on "Sociology," the system identifies other books with high similarity scores to that item.
+
+For those two recommencer, the Jaccard similarity was more effective than the cosine similarity seen in class. The Jaccard similarity measures the proportion of shared items between two sets by calculating the size of their intersection divided by the size of their union. In our context, it effectively identifies "reader twins" or similar books by comparing the overlap of binary interactions, rather than measuring the angle between vectors as cosine similarity does.
 
 ### 2. The First Hybrid & Weight Optimization
 We realized that neither model was perfect on its own. To find the "sweet spot," we created **Hybrid 1**, which combines the prediction scores of both models. We ran an optimization loop testing different weight ratios (from 5/95 to 95/5) to maximize **Precision@10**.
@@ -55,26 +70,35 @@ We realized that neither model was perfect on its own. To find the "sweet spot,"
 ### 3. Integrating Additional Elements
 To further refine the recommendations, we experimented with three metadata-driven "boosters":
 
-* **Fame (Popularity):** Utilizing **Logarithmic Scaling** to identify globally popular books while dampening the "superstar" effect.
-* **Author Loyalty:** Identifying authors the user has previously rented to suggest their other works.
-* **Subject Matching:** Boosting books that share the same classification or subjects as the user's history.
+* **Title**: Using text analytics we could use the similarity in books titles to recommend book with close topic as the one already rented
+* **Subject**: Utilizing text analytics (IF-XXX) we could use the proximity of the word used in the subject of each book to recommend book with similar subject as the one already rented.
+* **History**: analyzing the data, we noticed that the reader had a high probybility of renting again book that they already read, we used this caracteristic as a improvement for our recommender
+* **Data Bias**: in the data proposed for this exercise, a reader has a high probability to rent a book with a itemID following the one of book already read. We used this bias to make our recommender even more precise.
 
-When tested in isolation (without the CF base), these techniques were not effective as they lacked the depth of personalized interaction data.
+When tested in isolation (without the CF base), these techniques were not effective as they lacked the depth of personalized interaction data. The number presented below are not assessed using a cross validation technique, but only on one test set generated in the data (the need in time and energy to assess the precision of all of them using cross validation was too high for the importance of the table.)
 
 #### Individual Component Performance (Before Hybridization)
 | Technique | Precision@10 | Recall@10 |
 | :--- | :--- | :--- |
-| **Fame Only** | Low | Low |
-| **Author Boost Only** | Low | Low |
-| **Subject Boost Only** | Low | Low |
+| **Title text analytics only** | Low | Low |
+| **Subject text analytics only** | Low | Low |
+| **History only** | 5.1% | 24.3% |
+| **Data Bias only** | Low | Low |
+
+
+During our process, we tested various other recommender to try to improve the precision of the recommender, but some were not improving the effectiveness:
+* **Fame (Popularity):** Utilizing the number of times a book was rented to identify globally popular books was not effective.
+* **Author Loyalty:** Identifying authors the user has previously rented to suggest their other works did not improve the overall effectiveness.
+* **Publisher Loyalty** Identifying publisher the user has previously rented to suggest their other works did not improve the overall effectiveness.
+
 
 ---
 
 ### 4. The Final "All-In" Hybrid Model
-The ultimate version of our recommender system combines the high-performing **Hybrid 1** with these boosters. This ensures that while collaborative patterns drive the results, personal preferences for specific authors and subjects provide the final "nudge" for accuracy.
+The ultimate version of our recommender system combines the high-performing components of **Hybrid 1** (user-user & item-item) with the list of boosters that had a positive impact on the overall result. This ensures that while collaborative patterns drive the results, personal preferences for specific subjects provide the final "nudge" for accuracy.
 
 #### Final Model Configuration & Results
-We implemented **5-Fold Cross-Validation** to ensure these results remain consistent across different subsets of our library users[cite: 455, 477].
+We implemented **5-Fold Cross-Validation** to ensure these results remain consistent across different subsets of our library users.
 
 | Component | Weight (%) | 
 | :--- | :--- |
