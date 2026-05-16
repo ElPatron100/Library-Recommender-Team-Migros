@@ -1,6 +1,6 @@
 # 📚 University Library Recommender System - Team Migros
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_svg)]([YOUR_STREAMLIT_LINK_HERE](https://library-recommender-migros.streamlit.app/))
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_svg)](https://library-recommender-migros.streamlit.app/)
 [![YouTube Video](https://img.shields.io/badge/YouTube-Video-red?logo=youtube)](YOUR_YOUTUBE_LINK_HERE)
 
 ## 📖 Overview
@@ -179,7 +179,8 @@ Books are displayed as a responsive grid of cards. Cover images are fetched from
 **Cumulus Points and Gamification:**  
 The Cumulus Points system is the main engagement mechanic of the platform, built in the spirit of the Migros Cumulus loyalty programme. Every book a user has read is worth 50 points, and every additional book marked as read within the app adds another 50 points immediately. The running total appears in four places at once: the sticky header, the hero welcome banner, the Reading History tab, and the Leaderboard. All four update on the next render after any new book is marked, creating a direct feedback loop between reading activity and visible reward.
 
-View the app here: [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_svg)]([YOUR_STREAMLIT_LINK_HERE](https://library-recommender-migros.streamlit.app/))
+View the app here: [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_svg)](https://library-recommender-migros.streamlit.app/)
+
 ---
 
 ## 📺 Project Video
