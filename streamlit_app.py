@@ -458,6 +458,8 @@ def load_data():
         df_read['item_id']  = df_read['item_id'].astype(str)
         df_items['item_id'] = df_items['item_id'].astype(str)
 
+        df_read = df_read.drop_duplicates(subset=['user_id', 'item_id'])
+
         # ── Robust rec parsing ──────────────────────────────────────────────
         df_rec.columns = df_rec.columns.str.strip()
         df_rec['user_id'] = df_rec['user_id'].astype(str).str.strip()
