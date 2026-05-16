@@ -518,7 +518,7 @@ def fetch_book_data(isbn, title="", author=""):
     if cache_key in st.session_state.book_cache:
         return st.session_state.book_cache[cache_key]
 
-    API_KEY = "AIzaSyBiQlaEe0ZsJIWkfRQB5jiekhF5Qu_RNag"
+    API_KEY = st.secrets["GOOGLE_BOOKS_API_KEY"]
     url = "https://www.googleapis.com/books/v1/volumes"
 
     queries = []
