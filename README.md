@@ -15,11 +15,13 @@ To further elevate the overall user experience, the platform introduces three in
 ## 🗄 Exploratory Data Analysis (EDA)
 Our analysis focused on two primary datasets:
 # **Interactions:**
-This dataset shows the interaction between the users and the books for the last 2 years. In total the dataset shows 87,047 al records across 7,838 unique users and 15.109 books.
+This dataset shows the interaction between the users and the books for the last 2 years. In total the dataset shows 87,047 rental records across 7,838 unique users and 15.109 books.
 
 In average, user rented a total of 11.11 book and each book has been rented an average of 5.76 times. 
 
 ![Distribution of the rentals](rentals_per_user_item.png)
+**_Graph 1: Distribution of the rentals_**
+
 This graph shows the distribution of the rentals per users and per items.
 The distribution of rentals per user is heavily skewed to the left:
 *  **The Majority**: Most users are "casual" readers who have interacted with only 2 to 5 books.
@@ -41,19 +43,21 @@ Here is an example of the data for 3 different books chosen randomly in the data
 | 9235 | Commentaire du Code pénal suisse / (Art. 1-110) | Logoz, Paul | Delachaux et Niestlé | droit pénal--Suisse--[manuel] |
 | 3818 | Petar & Liza | Sekulić-Struja, Miroslav | Actes Sud | Bandes dessinées |
 
+
+**_Table 1: Example of the item dataset_**
+
 The visualization below highlights the dominant keywords within the library's **Subjects** metadata, revealing a clear geographic and thematic focus.
 
 The term **"Suisse"** is the most frequent descriptor, appearing in over 3,000 records. Following this geographic marker, the dataset is categorized by literary forms, such as **"Bandes dessinées"** (comics) and **"Romans"** (novels). Additionally, academic and topical keywords like **"enseignement"** (education), **"droit"** (law), and **"histoire"** (history) appear with significant frequency.
 
 ![Top Keywords](top_keywords.png)
-
-**_Table 1: Example of the item dataset_**
+**_Graph 2: Top Keywords in the Subject Dataset_**
 
 ## 🛠 Methodology & Algorithms
 Our approach evolved from basic collaborative filtering to a complex hybrid system that integrates user behavior with book metadata and readers' behaviours.
 
 ### 1. Collaborative Filtering (CF)
-We began by implementing two foundational collaborative filtering techniques using **Cosine Similarity** to measure the relationship between vectors in our interaction matrix.
+We began by implementing two foundational collaborative filtering techniques using **Jaccard Similarity** to measure the relationship between vectors in our interaction matrix.
 
 * **User-User CF:** This method identifies "neighbor" users who have similar rental histories. If User A and User B have both rented several of the same books, the system recommends other books rented by User B to User A.
 * **Item-Item CF:** This method focuses on the relationships between books rather than users. It calculates similarity based on how often two books are rented by the same people. If a student rents a book on "Sociology," the system identifies other books with high similarity scores to that item.
@@ -63,15 +67,15 @@ For those two recommencer, the Jaccard similarity was used since it was more eff
 ### 2. The First Hybrid & Weight Optimization
 We realized that neither model was perfect on its own. To find the "sweet spot," we created **Hybrid 1**, which combines the prediction scores of both models. We ran an optimization loop testing different weight ratios (from 5/95 to 95/5) to maximize **Precision@10**. We achieved an initial baseline precision of **18.09%** (cross-validation in the interaction dataset)
 
-**Optimal Weight:** **58% User-User / 42% Item-Item**.
-
 | Model | Precision@10 | Recall@10 |
 | :--- | :--- | :--- |
 | **User-User CF** | 17.05% | 88.62% |
 | **Item-Item CF** | 16.08% | 80.76% |
-| **Hybrid 1 (58/42)** | **18.09%** | **0.XXXX** |
 
 **_Table 2: Initial Performance Comparison_**
+
+**Optimal Weight:** **58% User-User / 42% Item-Item**.
+This hybrid recommender obtained a score of 16.38% on Kaggle.
 
 ---
 
@@ -94,13 +98,14 @@ When tested in isolation (without the CF base), these techniques were not effect
 | **Data Bias only** | 1.8% | 6.6% |
 
 **_Table 3: Individual Component Performance (Before Hybridization)_**
-_The precision and recall numbers presented in the table are not assessed using a cross validation technique, but only on one test set generated in the data. The energy use to assess the precision of all of them using cross validation was too high for the importance of the table._
+_The precision and recall numbers presented in the table are assessed using a cross validation technique for the test sets._
 
 
 During our process, we tested various other recommender to try to improve the precision of the recommender, but some were not improving the effectiveness:
 * **Fame (Popularity):** Utilizing the number of times a book was rented to identify globally popular books was not effective.
 * **Author Loyalty:** Identifying authors the user has previously rented to suggest their other works did not improve the overall effectiveness.
-* **Publisher Loyalty** Identifying publisher the user has previously rented to suggest their other works did not improve the overall effectiveness.
+* **Publisher Loyalty** Identifying publisher the user has previously rented to suggest their other works did not improve the overall effectiveness of the recommender.
+
 
 
 ---
@@ -112,33 +117,29 @@ The ultimate version of our recommender system combines the high-performing comp
 
 | Component | Weight (%) | 
 | :--- | :--- |
-| **User-User CF** | 26.6% |
+| **User-User CF** | 29.8% |
 | **History** | 25% |
-| **Item-Item CF** | 19.8% |
-| **Data Bias** | 12% |
-| **Title Text Analytics** | 6.9% | 
-| **Subject Text Analytics** | 1.7% | 
+| **Item-Item CF** | 22.1% |
+| **Data Bias** | 13.5% |
+| **Title Text Analytics** | 7.7% | 
+| **Subject Text Analytics** | 1.9% | 
 
 **_Table 4: Hybrid 2 recommender composition_**
 
 
-| Final Model | Final Precision@10 | Final Recall@10 |
-| :--- | :--- | :--- |
-| **Hybrid 2** | 0.XXX| 0.XXX|
+| Final Model | Final Score on Kaggle |
+| :--- | :--- |
+| **Hybrid 2** | 17.55% |
 
 **_Table 5: Hybrid 2 (final) recommender performance_**
 ---
 
 ### 5. Additional Note
 To maintain scientific integrity while ensuring the highest possible recommendation quality, we adopted a dual-phase training and evaluation strategy:
-*  **Validation Phase**: For the performance metrics (Precision@10 and Recall@10) of our hybrid recommender reported in our performance tables 2 & 5, we utilized a temporal 80/20 train-test split, combined with 5-fold cross-validation. This allowed us to rigorously assess the predictive power of each model on "unseen" data without any data leakage.
+*  **Validation Phase**: For the performance metrics (Precision@10 and Recall@10) of our recommender reported in our performance tables 2 & 3, we utilized a temporal 80/20 train-test split, combined with 5-fold cross-validation. This allowed us to rigorously assess the predictive power of each model on "unseen" data without any data leakage.
 
 *  **Production Phase**: Once the optimal hyperparameters and weights were identified via validation, we retrained the final model using 100% of the available interaction data. This "all-in" approach was used to generate our final Kaggle submissions and powers our Streamlit user interface, ensuring the system leverages every available data point to provide the most accurate real-world recommendations.
 ---
-
-## 📊 Performance Demonstration
-
-Let's see a demonstration of how our user interface is working.
 
 ## 📊 Performance Demonstration
 
@@ -155,8 +156,7 @@ Let's see a demonstration of how our user interface is working.
 
 ---
 ## ⚠️ Limitations
-* **Sparsity**: More than X% of users have rented fewer than X books, making it difficult to establish strong personalized trends for new users.
-* **Cold Start**: Recommending for users with very short histories remains a challenge addressed primarily through popularity-based fallbacks.
+* **Sparsity**: More than 30% of users have rented fewer than 4 books, making it difficult to establish strong personalized trends for new users.
 ---
 
 ## 💻 User Interface
@@ -170,11 +170,11 @@ Users sign in with their Cumulus Number, which is the same ID that appears in th
 Books are displayed as a responsive grid of cards. Cover images are fetched from the Google Books API using the ISBN first, with a fallback to a title-based search if no ISBN match is found. All results are cached in session state so repeated visits to the same book never trigger a second API call. When no cover is available from the API, which is frequent for older or more niche academic titles in this library's collection, a custom SVG placeholder is generated. Each placeholder has a gradient background, a book icon, and the book title. The color scheme is assigned by hashing the book title, so the same book always renders the same cover style regardless of who views it or when. Descriptions fetched from the API are stripped of any HTML formatting and shown as a short text snippet beneath the subject tag, if this information is available. The subject itself is taken from items metadata.
 
 **The Five Tabs:**
-  * The Recommendations tab displays the top 10 personalized picks from the Hybrid 2 model for the logged-in user, showing up to 20 cards per view. The author name on each card has two functions: it opens an external link to the author's Wikipedia search page, and a button saying "🔍 Books by [Author]" activates an in-dashboard filter that narrows the visible cards to other books by that same author present in the dataset. A banner appears at the top of the tab when a filter is active, with a button to clear it and return to the full recommendation list.
-  * The My History tab shows all books the user has read historically plus any additionally marked as read during the current session. A summary banner at the top displays the total Cumulus Points earned and how they break down per book. THe books in the history do not show a Mark as Read button.
-  * The Top 10 tab ranks the ten most interacted books across the full dataset, weighted by both reading frequency and how often a book appears across recommendation lists. The results appear first as a compact ranked list with read counts, then again as a visual card grid below so users can explore covers and descriptions and mark books as read directly from this view.
-  * The Book Club tab automatically scans the full recommendations dataset to find the five users whose recommended book lists overlap most with the logged-in user's own recommendations. The overlap is usually just one book recommendation. The matching runs entirely on set intersection with no manual input required. For each matched reader, their shared books are shown as a card row so both people can immediately see what titles they have in common and potentially use that as a starting point for a book club.
-  * The Leaderboard tab ranks all users by Cumulus Points and displays the top 50 readers. A summary panel at the top shows the current user's personal rank, their points total, and the total number of active readers in the system. If the user is among the top 50 users, the logged-in user's row is highlighted in orange throughout the table so it is easy to locate the position.
+  * The **Recommendations tab** displays the top 10 personalized picks from the Hybrid 2 model for the logged-in user, showing up to 20 cards per view. The author name on each card has two functions: it opens an external link to the author's Wikipedia search page, and a button saying "🔍 Books by [Author]" activates an in-dashboard filter that narrows the visible cards to other books by that same author present in the dataset. A banner appears at the top of the tab when a filter is active, with a button to clear it and return to the full recommendation list.
+  * The **My History tab** shows all books the user has read historically plus any additionally marked as read during the current session. A summary banner at the top displays the total Cumulus Points earned and how they break down per book. The books in the history do not show a Mark as Read button.
+  * The **Top 10 tab** ranks the ten most interacted books across the full dataset, weighted by both reading frequency and how often a book appears across recommendation lists. The results appear first as a compact ranked list with read counts, then again as a visual card grid below so users can explore covers and descriptions and mark books as read directly from this view.
+  * The **Book Club tab** automatically scans the full recommendations dataset to find the five users whose recommended book lists overlap most with the logged-in user's own recommendations. The overlap is usually just one book recommendation. The matching runs entirely on set intersection with no manual input required. For each matched reader, their shared books are shown as a card row so both people can immediately see what titles they have in common and potentially use that as a starting point for a book club.
+  * The **Leaderboard tab** ranks all users by Cumulus Points and displays the top 50 readers. A summary panel at the top shows the current user's personal rank, their points total, and the total number of active readers in the system. If the user is among the top 50 users, the logged-in user's row is highlighted in orange throughout the table so it is easy to locate the position.
 
 **Cumulus Points and Gamification:**  
 The Cumulus Points system is the main engagement mechanic of the platform, built in the spirit of the Migros Cumulus loyalty programme. Every book a user has read is worth 50 points, and every additional book marked as read within the app adds another 50 points immediately. The running total appears in four places at once: the sticky header, the hero welcome banner, the Reading History tab, and the Leaderboard. All four update on the next render after any new book is marked, creating a direct feedback loop between reading activity and visible reward.
