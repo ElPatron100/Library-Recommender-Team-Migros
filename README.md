@@ -70,7 +70,7 @@ We realized that neither model was perfect on its own. To find the "sweet spot,"
 | Model | Precision@10 | Recall@10 |
 | :--- | :--- | :--- |
 | **User-User CF** | 17.05% | 88.62% |
-| **Item-Item CF** | 16.08% | 80.76% |
+| **Item-Item CF** | 5.6% | 26.4% |
 
 **_Table 2: Initial Performance Comparison_**
 
@@ -148,7 +148,7 @@ To maintain scientific integrity while ensuring the highest possible recommendat
 * **Our Recommendation**: [Prediction Details]
 * **Analysis**: Our model accurately identified that this reader prefers **[Subject]** books. By utilizing **[Specific Recommender]**, we achieved a successful hit on the user's future interest.
 
-### Negative Case Study: User XX
+### Negative Case Study: Reader #4004
 * **Past Rentals**: [History Details]
 * **Our Recommendation**: [Prediction Details]
 * **Analysis**: Our model accurately identified that this reader prefers **[Subject]** books. By utilizing **[Specific Recommender]**, we achieved a successful hit on the user's future interest.
