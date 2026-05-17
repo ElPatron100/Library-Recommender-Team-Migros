@@ -7,7 +7,7 @@
 This project aims to enhance the student experience on the university library platform by integrating a personalized recommendation system. By analyzing rental histories, the "You might also like..." feature predicts and suggests academic and leisure materials tailored to individual interests, thereby fostering deeper user engagement and discovery.
 
 To further elevate the overall user experience, the platform introduces three innovative features:
-* **Best-seller recommender**: under the personalized recommendation, the reader have access to the list of the 10 books the most read that they have not rented yet.
+* **Best-seller recommender**: under the personalized recommendation, the reader have access to the list of the 10 books the most read.
 * **Book Friend Recommender**: This social tool matches readers based on shared reading habits to encourage intellectual exchange and community building. Its ultimate goal is to facilitate book discussions and inspire the formation of local book clubs.
 * **Cumulus Fidelity Integration**: Developed in partnership with the Migros group, the app allows readers to earn Cumulus points for every library rental. This incentive program is designed to reward frequent readers and increase long-term fidelity to the library system.
 
