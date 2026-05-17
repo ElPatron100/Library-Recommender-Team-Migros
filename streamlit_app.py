@@ -166,7 +166,7 @@ def inject_css():
 def load_data():
     try:
         read_file_url     = "https://raw.githubusercontent.com/ElPatron100/Library-Recommender-Team-Migros/main/interactions_train.csv"
-        rec_file_url      = "https://raw.githubusercontent.com/ElPatron100/Library-Recommender-Team-Migros/main/sample_submission.csv"
+        rec_file_url      = "https://raw.githubusercontent.com/ElPatron100/Library-Recommender-Team-Migros/main/best_hybrid_submission.csv"
         api_info_file_url = "https://raw.githubusercontent.com/ElPatron100/Library-Recommender-Team-Migros/main/items_api_info.csv"
 
         df_read  = pd.read_csv(read_file_url)
