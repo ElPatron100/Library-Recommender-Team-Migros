@@ -281,6 +281,19 @@ def load_data():
 
 # ─────────────────────────────────────────────
 # 3. BOOK DATA FETCHER
+#    Uses pre-fetched data from items_api_info.csv (covers + descriptions
+#    were retrieved via the Google Books API during data preparation and
+#    stored in the CSV to avoid live API calls at render time).
+#
+#    ATTEMPTED: live Google Books API calls at render time using the key
+#    stored in Streamlit secrets as st.secrets["GOOGLE_BOOKS_API_KEY"].
+#    This worked locally but failed after deploying to Streamlit Cloud.
+#    The likely cause is that Streamlit Cloud shares a small pool of
+#    outbound IP addresses across all hosted apps. Google detects this
+#    as automated/shared traffic and returns HTTP 429 (Too Many Requests)
+#    or silently blocks the requests. The API key itself is valid — the
+#    issue is the shared IP, not the credentials. The pre-fetched CSV
+#    approach below is the reliable alternative.
 # ─────────────────────────────────────────────
 def fetch_book_data(item_id, isbn, title="", author=""):
     """Returns (cover_url, description) from pre-fetched CSV data."""
@@ -293,6 +306,56 @@ def fetch_book_data(item_id, isbn, title="", author=""):
 
     return local_cover, local_desc
 
+    # ── ATTEMPTED: live Google Books API (disabled — see note above) ──
+    # cache_key = isbn or f"{title}_{author}"
+    # if not cache_key:
+    #     return local_cover, local_desc
+    #
+    # if 'book_cache' not in st.session_state:
+    #     st.session_state.book_cache = {}
+    #
+    # if cache_key in st.session_state.book_cache:
+    #     cached_cover, cached_desc = st.session_state.book_cache[cache_key]
+    #     return local_cover or cached_cover, local_desc or cached_desc
+    #
+    # if local_cover:
+    #     st.session_state.book_cache[cache_key] = (None, None)
+    #     return local_cover, local_desc
+    #
+    # API_KEY = st.secrets["GOOGLE_BOOKS_API_KEY"]
+    # url = "https://www.googleapis.com/books/v1/volumes"
+    # queries = []
+    # if isbn and len(isbn) >= 8:
+    #     queries.append(f"isbn:{isbn}")
+    # if title:
+    #     queries.append(f"intitle:{title}")
+    #
+    # api_cover = None
+    # api_desc  = None
+    #
+    # for q in queries:
+    #     try:
+    #         time.sleep(0.05)
+    #         resp = requests.get(url, params={"q": q, "key": API_KEY, "maxResults": 1}, timeout=5)
+    #         if resp.status_code == 200:
+    #             data = resp.json()
+    #             if "items" in data:
+    #                 vi      = data["items"][0].get("volumeInfo", {})
+    #                 img     = vi.get("imageLinks", {})
+    #                 img_url = img.get("thumbnail") or img.get("smallThumbnail")
+    #                 if img_url:
+    #                     api_cover = img_url.replace("http:", "https:")
+    #                 raw_desc = vi.get("description", "")
+    #                 if raw_desc:
+    #                     clean    = re.sub(r'<[^>]+>', '', raw_desc).strip()
+    #                     api_desc = clean[:200] + ('…' if len(clean) > 200 else '')
+    #                 if api_cover:
+    #                     break
+    #     except Exception:
+    #         pass
+    #
+    # st.session_state.book_cache[cache_key] = (api_cover, api_desc)
+    # return api_cover, local_desc or api_desc
 
 # ─────────────────────────────────────────────
 # 4. PLACEHOLDER COVER GENERATOR
