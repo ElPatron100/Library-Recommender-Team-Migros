@@ -193,6 +193,6 @@ Our YouTube video includes a presentation of the interface, ...
 
 ## 👩‍💻 Logistics
 * **Team Name:** Migros - Micha Streuli & Noé Délèze
-* **Kaggle Leaderboard Score:** 0.XXXX (Top X%)
+* **Kaggle Leaderboard Score:** 0.1755 (3rd)
 
 ---
