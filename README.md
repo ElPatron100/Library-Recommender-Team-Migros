@@ -185,7 +185,6 @@ View the app here: [![Streamlit App](https://static.streamlit.io/badges/streamli
 ---
 
 ## 📺 Project Video
-Our YouTube video includes a presentation of the interface, ...
 
 [**Watch the Presentation & Demo Here**](YOUR_YOUTUBE_LINK_HERE)
 
