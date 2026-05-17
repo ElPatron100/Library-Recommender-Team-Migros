@@ -70,7 +70,7 @@ We realized that neither model was perfect on its own. To find the "sweet spot,"
 | Model | Precision@10 | Recall@10 |
 | :--- | :--- | :--- |
 | **User-User CF** | 17.05% | 88.62% |
-| **Item-Item CF** | 16.08% | 80.76% |
+| **Item-Item CF** | 5.6% | 26.4% |
 
 **_Table 2: Initial Performance Comparison_**
 
@@ -143,15 +143,16 @@ To maintain scientific integrity while ensuring the highest possible recommendat
 
 ## 📊 Performance Demonstration
 
-### Positive Case Study: User XX
-* **Past Rentals**: [History Details]
-* **Our Recommendation**: [Prediction Details]
-* **Analysis**: Our model accurately identified that this reader prefers **[Subject]** books. By utilizing **[Specific Recommender]**, we achieved a successful hit on the user's future interest.
+### Positive Case Study: 
+* **Past Rentals**: Code de droit international privé suisse annoté, La responsabilité civile, DPMin : droit pénal des mineurs, Loi sur la partie générale des assurances sociales
+* **Our Recommendation**: Panorama III en droit du travail : recueil d'études réalisées, Droit de la famille : code annoté, Éthique de l'environnement : nature, valeur, respect
+* **Analysis**: Our model accurately identified that this reader prefers legal books. By utilizing our hybrid recommender, we achieved a successful hit on the user's future interest.
 
-### Negative Case Study: User XX
-* **Past Rentals**: [History Details]
-* **Our Recommendation**: [Prediction Details]
-* **Analysis**: Our model accurately identified that this reader prefers **[Subject]** books. By utilizing **[Specific Recommender]**, we achieved a successful hit on the user's future interest.
+### Negative Case Study: Reader #4004
+* **Past Rentals**: Le manuel pratique de la méthode Montessori, L'école autrement ? : les pédagogies alternatives en débat, La recherche en éducation : étapes et approches, Fondements et étapes du processus de recherche.
+* **Our Recommendation**: Diagnostics infirmiers : définitions et classification, La pensée infirmière, Evaluation clinique d'une personne symptomatique, Soins infirmiers : médecine et chirurgie (among others)
+* **Analysis**: The training history reveals a highly focused profile, consisting exclusively of titles related to education and research. This suggests a user renting materials specifically to support an academic study or curriculum in the field of education. Conversely, our system recommends a significant number of medical books; this is an apparent misalignment, as it is highly unlikely that a reader with such a specialized educational focus would be interested in those medical volumes.
+
 
 
 ---
@@ -172,7 +173,7 @@ Books are displayed as a responsive grid of cards. Cover images are fetched from
 **The Five Tabs:**
   * The **Recommendations tab** displays the top 10 personalized picks from the Hybrid 2 model for the logged-in user, showing up to 20 cards per view. The author name on each card has two functions: it opens an external link to the author's Wikipedia search page, and a button saying "🔍 Books by [Author]" activates an in-dashboard filter that narrows the visible cards to other books by that same author present in the dataset. A banner appears at the top of the tab when a filter is active, with a button to clear it and return to the full recommendation list.
   * The **My History tab** shows all books the user has read historically plus any additionally marked as read during the current session. A summary banner at the top displays the total Cumulus Points earned and how they break down per book. The books in the history do not show a Mark as Read button.
-  * The **Top 10 tab** ranks the ten most interacted books across the full dataset, weighted by both reading frequency and how often a book appears across recommendation lists. The results appear first as a compact ranked list with read counts, then again as a visual card grid below so users can explore covers and descriptions and mark books as read directly from this view.
+  * The **Top 10 tab** ranks the ten most interacted books across the full dataset by reading frequency. The results appear first as a compact ranked list with read counts, then again as a visual card grid below so users can explore covers and descriptions and mark books as read directly from this view.
   * The **Book Club tab** automatically scans the full recommendations dataset to find the five users whose recommended book lists overlap most with the logged-in user's own recommendations. The overlap is usually just one book recommendation. The matching runs entirely on set intersection with no manual input required. For each matched reader, their shared books are shown as a card row so both people can immediately see what titles they have in common and potentially use that as a starting point for a book club.
   * The **Leaderboard tab** ranks all users by Cumulus Points and displays the top 50 readers. A summary panel at the top shows the current user's personal rank, their points total, and the total number of active readers in the system. If the user is among the top 50 users, the logged-in user's row is highlighted in orange throughout the table so it is easy to locate the position.
 
