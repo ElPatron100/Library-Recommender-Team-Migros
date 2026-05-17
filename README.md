@@ -186,7 +186,7 @@ View the app here: [![Streamlit App](https://static.streamlit.io/badges/streamli
 
 ## 📺 Project Video
 
-[![Watch the Presentation & Demo Here]](https://youtu.be/8IDTJWs90h0)
+[Watch the Presentation & Demo Here](https://youtu.be/8IDTJWs90h0)
 
 ---
 
