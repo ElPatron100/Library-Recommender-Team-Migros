@@ -143,15 +143,16 @@ To maintain scientific integrity while ensuring the highest possible recommendat
 
 ## 📊 Performance Demonstration
 
-### Positive Case Study: User XX
-* **Past Rentals**: [History Details]
-* **Our Recommendation**: [Prediction Details]
-* **Analysis**: Our model accurately identified that this reader prefers **[Subject]** books. By utilizing **[Specific Recommender]**, we achieved a successful hit on the user's future interest.
+### Positive Case Study: 
+* **Past Rentals**: Code de droit international privé suisse annoté, La responsabilité civile, DPMin : droit pénal des mineurs, Loi sur la partie générale des assurances sociales
+* **Our Recommendation**: Panorama III en droit du travail : recueil d'études réalisées, Droit de la famille : code annoté, Éthique de l'environnement : nature, valeur, respect
+* **Analysis**: Our model accurately identified that this reader prefers legal books. By utilizing our hybrid recommender, we achieved a successful hit on the user's future interest.
 
 ### Negative Case Study: Reader #4004
-* **Past Rentals**: [History Details]
-* **Our Recommendation**: [Prediction Details]
-* **Analysis**: Our model accurately identified that this reader prefers **[Subject]** books. By utilizing **[Specific Recommender]**, we achieved a successful hit on the user's future interest.
+* **Past Rentals**: Le manuel pratique de la méthode Montessori, L'école autrement ? : les pédagogies alternatives en débat, La recherche en éducation : étapes et approches, Fondements et étapes du processus de recherche.
+* **Our Recommendation**: Diagnostics infirmiers : définitions et classification, La pensée infirmière, Evaluation clinique d'une personne symptomatique, Soins infirmiers : médecine et chirurgie (among others)
+* **Analysis**: The training history reveals a highly focused profile, consisting exclusively of titles related to education and research. This suggests a user renting materials specifically to support an academic study or curriculum in the field of education. Conversely, our system recommends a significant number of medical books; this is an apparent misalignment, as it is highly unlikely that a reader with such a specialized educational focus would be interested in those medical volumes.
+
 
 
 ---
