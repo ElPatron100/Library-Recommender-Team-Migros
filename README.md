@@ -212,6 +212,16 @@ View the app here: [![Streamlit App](https://static.streamlit.io/badges/streamli
 
 ---
 
+## 👥 Team Contributions  
+During the initial phase of the project, we explored different recommendation strategies and established our baseline score on the Kaggle leaderboard together. As the project's scope included an application, we divided the core responsibilities to maximize efficiency:
+
+* **Noé Délèze:** Focused on the backend, specifically refining the data manipulation, testing new variables, and optimizing the final hybrid recommendation algorithms.
+* **Micha Streuli:** Led the frontend development, designing the UI/UX, and building the interactive Streamlit dashboard.
+
+Throughout the entire process, we maintained continuous communication. We regularly met to review each other's progress, come up with new features, and ensure the backend models integrated seamlessly into the final user interface.
+
+---
+
 ## 👩‍💻 Logistics
 * **Team Name:** Migros - Micha Streuli & Noé Délèze
 * **Kaggle Leaderboard Score:** 0.1755 (3rd)
