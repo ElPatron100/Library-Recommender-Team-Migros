@@ -3,7 +3,29 @@
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_svg)](https://library-recommender-migros.streamlit.app/)
 [![YouTube Video](https://img.shields.io/badge/YouTube-Video-red?logo=youtube)](https://youtu.be/8IDTJWs90h0)
 
-## 📖 Overview
+## 📁 Repository Structure
+All project files are kept in the main root directory to ensure seamless deployment.
+
+*Application & Deployment*
+* **`streamlit_app.py`**: Streamlit dashboard script.
+* **`requirements.txt`**: Python dependencies.
+
+*Notebooks & Modeling*
+* **`EDA_code.ipynb`**: Exploratory data analysis and visualizations.
+* **`Recommenders_code.ipynb`**: Model training and hybrid algorithm optimization.
+
+*Data Files*
+* **`interactions_train.csv`**: Historical rental data.
+* **`items.csv`**: Raw book metadata.
+* **`items_api_info.csv`**: Enriched metadata with Google Books API-fetched covers and descriptions.
+* **`best_hybrid_submission.csv`**: Final optimized recommendation matrix.
+
+*Documentation & Assets*
+* **`README.md`**: Project documentation.
+* **`rentals_per_user_item.png`**: Rentals distribution chart.
+* **`top_keywords.png`**: Subject keywords chart.
+
+## 📖 Project Overview
 This project aims to enhance the student experience on the university library platform by integrating a personalized recommendation system. By analyzing rental histories, the "You might also like..." feature predicts and suggests academic and leisure materials tailored to individual interests, thereby fostering deeper user engagement and discovery.
 
 To further elevate the overall user experience, the platform introduces three innovative features:
