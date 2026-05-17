@@ -1,7 +1,7 @@
 # 📚 University Library Recommender System - Team Migros
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_svg)](https://library-recommender-migros.streamlit.app/)
-[![YouTube Video](https://img.shields.io/badge/YouTube-Video-red?logo=youtube)](YOUR_YOUTUBE_LINK_HERE)
+[![YouTube Video](https://img.shields.io/badge/YouTube-Video-red?logo=youtube)](https://youtu.be/8IDTJWs90h0)
 
 ## 📖 Overview
 This project aims to enhance the student experience on the university library platform by integrating a personalized recommendation system. By analyzing rental histories, the "You might also like..." feature predicts and suggests academic and leisure materials tailored to individual interests, thereby fostering deeper user engagement and discovery.
